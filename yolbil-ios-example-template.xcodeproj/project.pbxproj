@@ -1,0 +1,613 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		6A465F0B2ED0CDCC00C8CCBE /* YolbilMobileSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 6A465F0A2ED0CDCC00C8CCBE /* YolbilMobileSDK */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		6A465EDA2ED0CCE800C8CCBE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6A465EC42ED0CCE700C8CCBE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6A465ECB2ED0CCE700C8CCBE;
+			remoteInfo = "yolbil-ios-example-template";
+		};
+		6A465EE42ED0CCE800C8CCBE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6A465EC42ED0CCE700C8CCBE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6A465ECB2ED0CCE700C8CCBE;
+			remoteInfo = "yolbil-ios-example-template";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		6A465ECC2ED0CCE700C8CCBE /* yolbil-ios-example-template.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "yolbil-ios-example-template.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6A465ED92ED0CCE800C8CCBE /* yolbil-ios-example-templateTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "yolbil-ios-example-templateTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6A465EE32ED0CCE800C8CCBE /* yolbil-ios-example-templateUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "yolbil-ios-example-templateUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		6A465ECE2ED0CCE700C8CCBE /* yolbil-ios-example-template */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "yolbil-ios-example-template";
+			sourceTree = "<group>";
+		};
+		6A465EDC2ED0CCE800C8CCBE /* yolbil-ios-example-templateTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "yolbil-ios-example-templateTests";
+			sourceTree = "<group>";
+		};
+		6A465EE62ED0CCE800C8CCBE /* yolbil-ios-example-templateUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "yolbil-ios-example-templateUITests";
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		6A465EC92ED0CCE700C8CCBE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6A465F0B2ED0CDCC00C8CCBE /* YolbilMobileSDK in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6A465ED62ED0CCE800C8CCBE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6A465EE02ED0CCE800C8CCBE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		6A465EC32ED0CCE700C8CCBE = {
+			isa = PBXGroup;
+			children = (
+				6A465ECE2ED0CCE700C8CCBE /* yolbil-ios-example-template */,
+				6A465EDC2ED0CCE800C8CCBE /* yolbil-ios-example-templateTests */,
+				6A465EE62ED0CCE800C8CCBE /* yolbil-ios-example-templateUITests */,
+				6A465ECD2ED0CCE700C8CCBE /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		6A465ECD2ED0CCE700C8CCBE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6A465ECC2ED0CCE700C8CCBE /* yolbil-ios-example-template.app */,
+				6A465ED92ED0CCE800C8CCBE /* yolbil-ios-example-templateTests.xctest */,
+				6A465EE32ED0CCE800C8CCBE /* yolbil-ios-example-templateUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		6A465ECB2ED0CCE700C8CCBE /* yolbil-ios-example-template */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6A465EED2ED0CCE800C8CCBE /* Build configuration list for PBXNativeTarget "yolbil-ios-example-template" */;
+			buildPhases = (
+				6A465EC82ED0CCE700C8CCBE /* Sources */,
+				6A465EC92ED0CCE700C8CCBE /* Frameworks */,
+				6A465ECA2ED0CCE700C8CCBE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				6A465ECE2ED0CCE700C8CCBE /* yolbil-ios-example-template */,
+			);
+			name = "yolbil-ios-example-template";
+			packageProductDependencies = (
+				6A465F0A2ED0CDCC00C8CCBE /* YolbilMobileSDK */,
+			);
+			productName = "yolbil-ios-example-template";
+			productReference = 6A465ECC2ED0CCE700C8CCBE /* yolbil-ios-example-template.app */;
+			productType = "com.apple.product-type.application";
+		};
+		6A465ED82ED0CCE800C8CCBE /* yolbil-ios-example-templateTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6A465EF02ED0CCE800C8CCBE /* Build configuration list for PBXNativeTarget "yolbil-ios-example-templateTests" */;
+			buildPhases = (
+				6A465ED52ED0CCE800C8CCBE /* Sources */,
+				6A465ED62ED0CCE800C8CCBE /* Frameworks */,
+				6A465ED72ED0CCE800C8CCBE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6A465EDB2ED0CCE800C8CCBE /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				6A465EDC2ED0CCE800C8CCBE /* yolbil-ios-example-templateTests */,
+			);
+			name = "yolbil-ios-example-templateTests";
+			packageProductDependencies = (
+			);
+			productName = "yolbil-ios-example-templateTests";
+			productReference = 6A465ED92ED0CCE800C8CCBE /* yolbil-ios-example-templateTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		6A465EE22ED0CCE800C8CCBE /* yolbil-ios-example-templateUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6A465EF32ED0CCE800C8CCBE /* Build configuration list for PBXNativeTarget "yolbil-ios-example-templateUITests" */;
+			buildPhases = (
+				6A465EDF2ED0CCE800C8CCBE /* Sources */,
+				6A465EE02ED0CCE800C8CCBE /* Frameworks */,
+				6A465EE12ED0CCE800C8CCBE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6A465EE52ED0CCE800C8CCBE /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				6A465EE62ED0CCE800C8CCBE /* yolbil-ios-example-templateUITests */,
+			);
+			name = "yolbil-ios-example-templateUITests";
+			packageProductDependencies = (
+			);
+			productName = "yolbil-ios-example-templateUITests";
+			productReference = 6A465EE32ED0CCE800C8CCBE /* yolbil-ios-example-templateUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		6A465EC42ED0CCE700C8CCBE /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2610;
+				LastUpgradeCheck = 2610;
+				TargetAttributes = {
+					6A465ECB2ED0CCE700C8CCBE = {
+						CreatedOnToolsVersion = 26.1.1;
+					};
+					6A465ED82ED0CCE800C8CCBE = {
+						CreatedOnToolsVersion = 26.1.1;
+						TestTargetID = 6A465ECB2ED0CCE700C8CCBE;
+					};
+					6A465EE22ED0CCE800C8CCBE = {
+						CreatedOnToolsVersion = 26.1.1;
+						TestTargetID = 6A465ECB2ED0CCE700C8CCBE;
+					};
+				};
+			};
+			buildConfigurationList = 6A465EC72ED0CCE700C8CCBE /* Build configuration list for PBXProject "yolbil-ios-example-template" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 6A465EC32ED0CCE700C8CCBE;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				6A465F092ED0CDCC00C8CCBE /* XCRemoteSwiftPackageReference "basarsoft-pod-repo" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 6A465ECD2ED0CCE700C8CCBE /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				6A465ECB2ED0CCE700C8CCBE /* yolbil-ios-example-template */,
+				6A465ED82ED0CCE800C8CCBE /* yolbil-ios-example-templateTests */,
+				6A465EE22ED0CCE800C8CCBE /* yolbil-ios-example-templateUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		6A465ECA2ED0CCE700C8CCBE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6A465ED72ED0CCE800C8CCBE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6A465EE12ED0CCE800C8CCBE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		6A465EC82ED0CCE700C8CCBE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6A465ED52ED0CCE800C8CCBE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6A465EDF2ED0CCE800C8CCBE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		6A465EDB2ED0CCE800C8CCBE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6A465ECB2ED0CCE700C8CCBE /* yolbil-ios-example-template */;
+			targetProxy = 6A465EDA2ED0CCE800C8CCBE /* PBXContainerItemProxy */;
+		};
+		6A465EE52ED0CCE800C8CCBE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6A465ECB2ED0CCE700C8CCBE /* yolbil-ios-example-template */;
+			targetProxy = 6A465EE42ED0CCE800C8CCBE /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		6A465EEB2ED0CCE800C8CCBE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = YH4NUPFH74;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.1;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		6A465EEC2ED0CCE800C8CCBE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = YH4NUPFH74;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.1;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		6A465EEE2ED0CCE800C8CCBE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = YH4NUPFH74;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Basarsoft.yolbil-ios-example-template";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		6A465EEF2ED0CCE800C8CCBE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = YH4NUPFH74;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Basarsoft.yolbil-ios-example-template";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		6A465EF12ED0CCE800C8CCBE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = YH4NUPFH74;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Basarsoft.yolbil-ios-example-templateTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/yolbil-ios-example-template.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/yolbil-ios-example-template";
+			};
+			name = Debug;
+		};
+		6A465EF22ED0CCE800C8CCBE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = YH4NUPFH74;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Basarsoft.yolbil-ios-example-templateTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/yolbil-ios-example-template.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/yolbil-ios-example-template";
+			};
+			name = Release;
+		};
+		6A465EF42ED0CCE800C8CCBE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = YH4NUPFH74;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Basarsoft.yolbil-ios-example-templateUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "yolbil-ios-example-template";
+			};
+			name = Debug;
+		};
+		6A465EF52ED0CCE800C8CCBE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = YH4NUPFH74;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "Basarsoft.yolbil-ios-example-templateUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "yolbil-ios-example-template";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		6A465EC72ED0CCE700C8CCBE /* Build configuration list for PBXProject "yolbil-ios-example-template" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6A465EEB2ED0CCE800C8CCBE /* Debug */,
+				6A465EEC2ED0CCE800C8CCBE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6A465EED2ED0CCE800C8CCBE /* Build configuration list for PBXNativeTarget "yolbil-ios-example-template" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6A465EEE2ED0CCE800C8CCBE /* Debug */,
+				6A465EEF2ED0CCE800C8CCBE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6A465EF02ED0CCE800C8CCBE /* Build configuration list for PBXNativeTarget "yolbil-ios-example-templateTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6A465EF12ED0CCE800C8CCBE /* Debug */,
+				6A465EF22ED0CCE800C8CCBE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6A465EF32ED0CCE800C8CCBE /* Build configuration list for PBXNativeTarget "yolbil-ios-example-templateUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6A465EF42ED0CCE800C8CCBE /* Debug */,
+				6A465EF52ED0CCE800C8CCBE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		6A465F092ED0CDCC00C8CCBE /* XCRemoteSwiftPackageReference "basarsoft-pod-repo" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/basarsoft-arge/basarsoft-pod-repo.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		6A465F0A2ED0CDCC00C8CCBE /* YolbilMobileSDK */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6A465F092ED0CDCC00C8CCBE /* XCRemoteSwiftPackageReference "basarsoft-pod-repo" */;
+			productName = YolbilMobileSDK;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 6A465EC42ED0CCE700C8CCBE /* Project object */;
+}
