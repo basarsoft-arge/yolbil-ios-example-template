@@ -155,3 +155,4 @@ iOSInjectionProject/
 # Secrets - DO NOT COMMIT
 Secrets.swift
 
+.DS_Store

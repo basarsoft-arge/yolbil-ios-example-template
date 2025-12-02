@@ -42,6 +42,8 @@ class RoutingService: ObservableObject {
                 
                 print("[RoutingRequest] Başlangıç: \(start.latitude),\(start.longitude) -> Bitiş: \(end.latitude),\(end.longitude) Tip: \(routeType.rawValue)")
                 
+                /*
+                //APP CODE ACC ID ile yapılan routing
                 // Navigasyon bundle'ı oluştur
                 // Bu bundle rota hesaplama için gerekli servisleri içerir
                 let gpsSource = GPSLocationSource()
@@ -52,6 +54,18 @@ class RoutingService: ObservableObject {
                     locationSource: gpsSource
                 )
                 builder?.setRequestEndpoint("/service/api/v1/Routing/BasarRouting")
+                 
+                */
+                
+                //API KEY ile yapılan routing
+                // Navigasyon bundle'ı oluştur
+                // Bu bundle rota hesaplama için gerekli servisleri içerir
+                let gpsSource = GPSLocationSource()
+                let builder = YBYolbilNavigationBundleBuilder(
+                    baseUrl: "https://services.basarsoft.com.tr",
+                    apiKey: Secrets.apiKey,
+                    locationSource: gpsSource
+                )
                 
                 // Rota tipini yapılandır (araç, kamyon, yaya)
                 switch routeType {
