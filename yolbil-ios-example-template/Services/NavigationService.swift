@@ -134,8 +134,8 @@ class NavigationService: ObservableObject {
         builder?.setCommandListener(listener)
         self.commandListener = listener
         
-        // Bundle'ı oluştur (Kotlin'deki gibi hata yakalama)
-        // iOS'ta build() optional döndürüyor, bu yüzden guard kullanıyoruz
+        // Bundle'ı oluştur
+        // build() optional döndürüyor, bu yüzden guard kullanıyoruz
         guard let bundle = builder?.build() else {
             errorMessage = "Navigasyon bundle'ı oluşturulamadı"
             print("[NavigationService] getNavigationBundle build failed")
@@ -161,8 +161,8 @@ class NavigationService: ObservableObject {
         DispatchQueue.global(qos: .userInitiated).async { [weak self] in
             guard let self = self else { return }
             
-            // Rota hesaplama (Kotlin'deki gibi hata yakalama)
-            // iOS'ta startNavigation NSException throw edebilir, bu yüzden optional olarak kontrol ediyoruz
+            // Rota hesaplama
+            // startNavigation optional döndürebilir, bu yüzden kontrol ediyoruz
             guard let results = bundle.startNavigation(startPos, to: endPos),
                   results.size() > 0,
                   let firstRaw = results.get(0),
@@ -175,7 +175,7 @@ class NavigationService: ObservableObject {
                 return
             }
             
-            // Rota noktaları kontrolü (Kotlin'deki gibi: pointCount == 0 kontrolü)
+            // Rota noktaları kontrolü
             let pointCount = navResult.getPoints()?.size() ?? 0
             if pointCount == 0 {
                 DispatchQueue.main.async {
@@ -186,9 +186,8 @@ class NavigationService: ObservableObject {
                 return
             }
             
-            // Navigasyonu başlat (Kotlin'deki gibi beginNavigation hata yakalama)
-            // iOS'ta beginNavigation void döndürüyor, hata durumunda nil dönebilir veya exception throw edebilir
-            // Güvenli çağrı için kontrol ediyoruz
+            // Navigasyonu başlat
+            // beginNavigation void döndürüyor, güvenli çağrı için kontrol ediyoruz
             bundle.beginNavigation(navResult)
             
             // İlk bilgileri güncelle
@@ -205,13 +204,11 @@ class NavigationService: ObservableObject {
     }
     
     /// Navigasyonu durdurur ve kaynakları temizler
-    /// Kotlin'deki gibi hata yakalama ile güvenli temizleme
     func stopNavigation() {
         // Bundle'ı durdur
         navigationBundle?.stopNavigation()
         
         // Sadece navigasyon katmanını kaldır (BlueDot'u koru)
-        // Kotlin'deki gibi runCatching ile hata yakalama
         if let mapView = mapView, let layers = mapView.getLayers() {
             // Navigasyon katmanını güvenli şekilde kaldır
             if let navLayer = navigationLayer {
@@ -439,9 +436,9 @@ private class NavigationCommandListener: YBCommandListener {
 
 extension NavigationService {
     
-    /// Navigasyon komutunu işler (Kotlin'deki gibi totalDistanceToCommand ve remainingTimeInSec kullanarak)
+    /// Navigasyon komutunu işler
     fileprivate func handleNavCommand(_ command: YBNavigationCommand) {
-        // Kotlin'deki gibi: command.totalDistanceToCommand ve command.remainingTimeInSec kullan
+        // command.totalDistanceToCommand ve command.remainingTimeInSec kullanarak bilgileri al
         if let info = NavigationInfo.fromRemaining(
             distanceMeters: command.getTotalDistanceToCommand(),
             timeSeconds: command.getRemainingTimeInSec(),
@@ -467,7 +464,7 @@ extension NavigationService {
     
     /// Rota yeniden hesaplandığında çağrılır
     fileprivate func handleNavRecalculated(_ navigationResult: YBNavigationResult) {
-        // Kotlin'deki gibi: NavigationResult'tan NavigationInfo oluştur
+        // NavigationResult'tan NavigationInfo oluştur
         let info = NavigationInfo.from(
             totalDistance: navigationResult.getTotalDistance(),
             totalTime: navigationResult.getTotalTime(),

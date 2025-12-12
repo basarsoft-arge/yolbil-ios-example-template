@@ -113,7 +113,7 @@ struct NavigationInfo: Equatable {
         )
     }
     
-    /// Kotlin'deki gibi kalan mesafe ve süreden NavigationInfo oluşturur
+    /// Kalan mesafe ve süreden NavigationInfo oluşturur
     /// - Parameters:
     ///   - distanceMeters: Kalan mesafe (metre)
     ///   - timeSeconds: Kalan süre (saniye)
@@ -153,23 +153,18 @@ struct NavigationInfo: Equatable {
         return ""
     }
     
-    /// Saniyeyi okunabilir süreye çevirir (Kotlin'deki formatDuration metoduna göre)
+    /// Saniyeyi okunabilir süreye çevirir
     /// - Parameter seconds: Süre (saniye)
     /// - Returns: Formatlanmış süre ("5 dk", "1 sa", "1 sa 20 dk")
     private static func formatDuration(_ seconds: Double) -> String {
-        // Kotlin'deki gibi: totalMinutes = ceil(timeSeconds / 60.0)
         let totalMinutes = Int(ceil(seconds / 60.0))
         
-        // Kotlin: if (totalMinutes < 60) "$totalMinutes dk"
         if totalMinutes < 60 {
             return "\(totalMinutes) dk"
         } else {
-            // Kotlin: val hours = totalMinutes / 60
-            //         val minutes = totalMinutes % 60
             let hours = totalMinutes / 60
             let minutes = totalMinutes % 60
             
-            // Kotlin: if (minutes == 0) "$hours sa" else "$hours sa $minutes dk"
             if minutes == 0 {
                 return "\(hours) sa"
             } else {
@@ -178,18 +173,15 @@ struct NavigationInfo: Equatable {
         }
     }
     
-    /// Metreyi okunabilir mesafeye çevirir (Kotlin'deki formatDistance metoduna göre)
+    /// Metreyi okunabilir mesafeye çevirir
     /// - Parameter meters: Mesafe (metre)
     /// - Returns: Formatlanmış mesafe ("500 m", "2.5 km", "100 km")
     private static func formatDistance(_ meters: Double) -> String {
-        // Kotlin: if (distanceMeters < 1000) "${distanceMeters.toInt()} m"
         if meters < 1000 {
             return "\(Int(meters)) m"
         } else {
-            // Kotlin: val km = distanceMeters / 1000.0
             let km = meters / 1000.0
             
-            // Kotlin: if (km >= 100) String.format("%.0f km", km) else String.format("%.1f km", km)
             if km >= 100 {
                 return String(format: "%.0f km", km)
             } else {
