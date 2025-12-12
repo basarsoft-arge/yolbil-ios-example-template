@@ -77,3 +77,125 @@ struct RouteInstruction: Equatable {
     let icon: String
 }
 
+// MARK: - Navigation Info (Turn-by-Turn Navigasyon Bilgisi)
+/// Gerçek zamanlı navigasyon bilgilerini tutar
+/// Kalan süre, mesafe ve mevcut komut bilgilerini içerir
+struct NavigationInfo: Equatable {
+    /// Kalan süre (formatlanmış: "5 dk", "1 sa 20 dk")
+    let remainingTime: String
+    
+    /// Kalan mesafe (formatlanmış: "500 m", "2.5 km")
+    let remainingDistance: String
+    
+    /// Tahmini varış saati (formatlanmış: "14:30")
+    /// Not: Şimdilik boş gelecek, alt yapı hazır
+    let eta: String
+    
+    /// Mevcut navigasyon komutu (ör: "Sağa dön", "Düz devam et")
+    let currentCommand: String?
+    
+    /// Bir sonraki komuta olan mesafe (metre)
+    let distanceToNextCommand: Double
+    
+    /// NavigationResult'tan NavigationInfo oluşturur
+    /// - Parameters:
+    ///   - totalDistance: Toplam kalan mesafe (metre)
+    ///   - totalTime: Toplam kalan süre (saniye)
+    ///   - command: Mevcut navigasyon komutu (opsiyonel)
+    /// - Returns: Formatlanmış NavigationInfo
+    static func from(totalDistance: Double, totalTime: Double, command: String? = nil, distanceToCommand: Double = 0) -> NavigationInfo {
+        return NavigationInfo(
+            remainingTime: formatDuration(totalTime),
+            remainingDistance: formatDistance(totalDistance),
+            eta: calculateETA(from: totalTime),
+            currentCommand: command,
+            distanceToNextCommand: distanceToCommand
+        )
+    }
+    
+    /// Kotlin'deki gibi kalan mesafe ve süreden NavigationInfo oluşturur
+    /// - Parameters:
+    ///   - distanceMeters: Kalan mesafe (metre)
+    ///   - timeSeconds: Kalan süre (saniye)
+    ///   - command: Mevcut navigasyon komutu (opsiyonel)
+    ///   - distanceToCommand: Bir sonraki komuta olan mesafe (metre)
+    /// - Returns: Formatlanmış NavigationInfo veya nil (geçersiz veri varsa)
+    static func fromRemaining(distanceMeters: Double?, timeSeconds: Double?, command: String? = nil, distanceToCommand: Double = 0) -> NavigationInfo? {
+        guard let distance = distanceMeters,
+              let time = timeSeconds else {
+            return nil
+        }
+        
+        return NavigationInfo(
+            remainingTime: formatDuration(time),
+            remainingDistance: formatDistance(distance),
+            eta: calculateETA(from: time),
+            currentCommand: command,
+            distanceToNextCommand: distanceToCommand
+        )
+    }
+    
+    /// ETA (Tahmini Varış Saati) hesaplar
+    /// - Parameter timeSeconds: Kalan süre (saniye)
+    /// - Returns: Formatlanmış saat (HH:mm)
+    private static func calculateETA(from timeSeconds: Double) -> String {
+        let totalMinutes = Int(ceil(timeSeconds / 60.0))
+        let calendar = Calendar.current
+        let now = Date()
+        
+        if let etaDate = calendar.date(byAdding: .minute, value: totalMinutes, to: now) {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "HH:mm"
+            formatter.locale = Locale(identifier: "tr_TR")
+            return formatter.string(from: etaDate)
+        }
+        
+        return ""
+    }
+    
+    /// Saniyeyi okunabilir süreye çevirir (Kotlin'deki formatDuration metoduna göre)
+    /// - Parameter seconds: Süre (saniye)
+    /// - Returns: Formatlanmış süre ("5 dk", "1 sa", "1 sa 20 dk")
+    private static func formatDuration(_ seconds: Double) -> String {
+        // Kotlin'deki gibi: totalMinutes = ceil(timeSeconds / 60.0)
+        let totalMinutes = Int(ceil(seconds / 60.0))
+        
+        // Kotlin: if (totalMinutes < 60) "$totalMinutes dk"
+        if totalMinutes < 60 {
+            return "\(totalMinutes) dk"
+        } else {
+            // Kotlin: val hours = totalMinutes / 60
+            //         val minutes = totalMinutes % 60
+            let hours = totalMinutes / 60
+            let minutes = totalMinutes % 60
+            
+            // Kotlin: if (minutes == 0) "$hours sa" else "$hours sa $minutes dk"
+            if minutes == 0 {
+                return "\(hours) sa"
+            } else {
+                return "\(hours) sa \(minutes) dk"
+            }
+        }
+    }
+    
+    /// Metreyi okunabilir mesafeye çevirir (Kotlin'deki formatDistance metoduna göre)
+    /// - Parameter meters: Mesafe (metre)
+    /// - Returns: Formatlanmış mesafe ("500 m", "2.5 km", "100 km")
+    private static func formatDistance(_ meters: Double) -> String {
+        // Kotlin: if (distanceMeters < 1000) "${distanceMeters.toInt()} m"
+        if meters < 1000 {
+            return "\(Int(meters)) m"
+        } else {
+            // Kotlin: val km = distanceMeters / 1000.0
+            let km = meters / 1000.0
+            
+            // Kotlin: if (km >= 100) String.format("%.0f km", km) else String.format("%.1f km", km)
+            if km >= 100 {
+                return String(format: "%.0f km", km)
+            } else {
+                return String(format: "%.1f km", km)
+            }
+        }
+    }
+}
+

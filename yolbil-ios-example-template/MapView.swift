@@ -132,6 +132,9 @@ struct YolbilMapView: UIViewRepresentable {
     /// Seçili tile kaynağı
     var tileSource: TileSource = .yolbilVector
     
+    /// Mock GPS gönderme callback'i (haritaya uzun basınca çağrılır)
+    var onLongPress: ((YBMapPos) -> Void)?
+    
     /// UIKit görünümü oluşturur (SwiftUI tarafından çağrılır)
     func makeUIView(context: Context) -> YBMapView {
         // Harita görünümünü oluştur (SwiftUI boyutlandıracak)
@@ -167,7 +170,42 @@ struct YolbilMapView: UIViewRepresentable {
             self.mapView = newMapView
         }
         
+        // Uzun basınca mock GPS gönderme gesture'ı ekle
+        let longPressGesture = UILongPressGestureRecognizer(target: context.coordinator, action: #selector(Coordinator.handleLongPress(_:)))
+        longPressGesture.minimumPressDuration = 1.0 // 1 saniye basılı tutma
+        newMapView.addGestureRecognizer(longPressGesture)
+        
+        // Coordinator'ı sakla
+        context.coordinator.mapView = newMapView
+        context.coordinator.onLongPress = onLongPress
+        
         return newMapView
+    }
+    
+    /// Coordinator sınıfı (gesture recognizer için)
+    func makeCoordinator() -> Coordinator {
+        Coordinator()
+    }
+    
+    /// Coordinator sınıfı
+    class Coordinator {
+        var mapView: YBMapView?
+        var onLongPress: ((YBMapPos) -> Void)?
+        
+        @objc func handleLongPress(_ gesture: UILongPressGestureRecognizer) {
+            guard gesture.state == .began,
+                  let mapView = mapView else { return }
+            
+            let point = gesture.location(in: mapView)
+            let scale = UIScreen.main.scale
+            let scaledPoint = CGPoint(x: point.x * scale, y: point.y * scale)
+            let screenPos = YBScreenPos(x: Float(scaledPoint.x), y: Float(scaledPoint.y))
+            
+            guard let mapPos = mapView.screen(toMap: screenPos) else { return }
+            
+            // Callback'i çağır
+            onLongPress?(mapPos)
+        }
     }
     
     /// Seçili tile kaynağına göre katman ekler
@@ -358,7 +396,8 @@ struct YolbilMapView: UIViewRepresentable {
     
     /// SwiftUI görünümü güncellendiğinde çağrılır
     func updateUIView(_ uiView: YBMapView, context: Context) {
-        // Gerekirse harita görünümünü güncelle
+        // Callback'i güncelle
+        context.coordinator.onLongPress = onLongPress
     }
 }
 
@@ -370,6 +409,12 @@ struct MapViewScreen: View {
     
     /// Rota hesaplama servisi
     @StateObject private var routingService = RoutingService()
+    
+    /// Turn-by-turn navigasyon servisi
+    @StateObject private var navigationService = NavigationService()
+    
+    /// GPS konum kaynağı
+    @State private var locationSource: GPSLocationSource?
     
     /// Haritadaki rota katmanı referansı (silme için)
     @State private var routeLayer: YBVectorLayer?
@@ -385,12 +430,25 @@ struct MapViewScreen: View {
     var body: some View {
         ZStack {
             // Harita görünümü (arka plan)
-            YolbilMapView(mapView: $mapView, tileSource: selectedTileSource)
-                .edgesIgnoringSafeArea(.all)
+            YolbilMapView(
+                mapView: $mapView,
+                tileSource: selectedTileSource,
+                onLongPress: { mapPos in
+                    sendMockLocationAt(mapPos: mapPos)
+                }
+            )
+            .edgesIgnoringSafeArea(.all)
             
             VStack {
-                // Rota bilgisi kartı (üstte, küçük)
-                if let routeInfo = routingService.routeInfo {
+                // Navigasyon bilgi kartı (aktif navigasyon varsa)
+                if navigationService.isNavigating, let navInfo = navigationService.navigationInfo {
+                    NavigationInfoCard(navigationInfo: navInfo)
+                        .padding(.top, 10)
+                        .padding(.horizontal, 16)
+                        .transition(.move(edge: .top).combined(with: .opacity))
+                }
+                // Rota bilgisi kartı (üstte, küçük) - navigasyon yoksa göster
+                else if let routeInfo = routingService.routeInfo {
                     RouteInfoCard(routeInfo: routeInfo)
                         .padding(.top, 10)
                         .padding(.horizontal, 16)
@@ -421,30 +479,73 @@ struct MapViewScreen: View {
                     
                     Spacer()
                     
-                    // Rota çizme butonu (sağ alt köşe)
-                    Button(action: {
-                        calculateAndDrawRoute()
-                    }) {
-                        HStack {
-                            // Hesaplama sırasında loading göstergesi
-                            if routingService.isCalculating {
-                                ProgressView()
-                                    .progressViewStyle(CircularProgressViewStyle(tint: .white))
-                                    .scaleEffect(0.8)
-                            } else {
-                                Image(systemName: "map.fill")
+                    // Navigasyon butonları (sağ alt köşe)
+                    VStack(spacing: 8) {
+                        // Navigasyon aktifse durdur butonu göster
+                        if navigationService.isNavigating {
+                            Button(action: {
+                                stopNavigation()
+                            }) {
+                                HStack {
+                                    Image(systemName: "stop.fill")
+                                    Text("Navigasyonu Durdur")
+                                        .fontWeight(.semibold)
+                                }
+                                .foregroundColor(.white)
+                                .padding(.horizontal, 20)
+                                .padding(.vertical, 12)
+                                .frame(minWidth: 160) // Diğer butonlarla aynı genişlik
+                                .background(Color.red)
+                                .cornerRadius(10)
+                                .shadow(radius: 5)
                             }
-                            Text(routingService.isCalculating ? "Hesaplanıyor..." : "Rota Çiz")
-                                .fontWeight(.semibold)
+                        } else {
+                            // Rota varsa navigasyon başlat butonu
+                            if routingService.routeInfo != nil {
+                                Button(action: {
+                                    startNavigation()
+                                }) {
+                                    HStack {
+                                        Image(systemName: "location.fill")
+                                        Text("Navigasyonu Başlat")
+                                            .fontWeight(.semibold)
+                                    }
+                                    .foregroundColor(.white)
+                                    .padding(.horizontal, 20)
+                                    .padding(.vertical, 12)
+                                    .frame(minWidth: 160) // Rota çiz butonu ile aynı genişlik
+                                    .background(Color.green)
+                                    .cornerRadius(10)
+                                    .shadow(radius: 5)
+                                }
+                            }
+                            
+                            // Rota çizme butonu
+                            Button(action: {
+                                calculateAndDrawRoute()
+                            }) {
+                                HStack {
+                                    if routingService.isCalculating {
+                                        ProgressView()
+                                            .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                                            .scaleEffect(0.8)
+                                    } else {
+                                        Image(systemName: "map.fill")
+                                    }
+                                    Text(routingService.isCalculating ? "Hesaplanıyor..." : "Rota Çiz")
+                                        .fontWeight(.semibold)
+                                }
+                                .foregroundColor(.white)
+                                .padding(.horizontal, 20)
+                                .padding(.vertical, 12)
+                                .frame(minWidth: 160) // Navigasyon başlat butonu ile aynı genişlik
+                                .background(routingService.isCalculating ? Color.gray : Color.blue)
+                                .cornerRadius(10)
+                                .shadow(radius: 5)
+                            }
+                            .disabled(routingService.isCalculating)
                         }
-                        .foregroundColor(.white)
-                        .padding(.horizontal, 20)
-                        .padding(.vertical, 12)
-                        .background(routingService.isCalculating ? Color.gray : Color.blue)
-                        .cornerRadius(10)
-                        .shadow(radius: 5)
                     }
-                    .disabled(routingService.isCalculating)
                     .padding(.trailing, 20)
                     .padding(.bottom, 20)
                 }
@@ -452,6 +553,9 @@ struct MapViewScreen: View {
         }
         .navigationTitle("Harita")
         .navigationBarTitleDisplayMode(.inline)
+        .onAppear {
+            setupLocationSource()
+        }
         // Hata durumunda alert göster
         .alert("Rota Hatası", isPresented: .constant(routingService.errorMessage != nil)) {
             Button("Tamam", role: .cancel) {
@@ -462,6 +566,108 @@ struct MapViewScreen: View {
                 Text(error)
             }
         }
+    }
+    
+    // MARK: - Setup Methods
+    
+    /// GPS konum kaynağını oluşturur ve BlueDot'u ekler
+    private func setupLocationSource() {
+        guard locationSource == nil else { return }
+        
+        if let source = GPSLocationSource() {
+            self.locationSource = source
+            source.startLocationUpdates()
+            
+            // BlueDot katmanını ekle (harita hazır olduğunda)
+            // İlk konum olarak varsayılan konumu kullan
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                if let mapView = self.mapView {
+                    let initialLocation = LocationData(
+                        latitude: 40.989532,
+                        longitude: 29.096925
+                    )
+                    self.navigationService.addBlueDotLayer(
+                        to: mapView,
+                        locationSource: source,
+                        initialLocation: initialLocation
+                    )
+                    
+                    // Haritayı ilk konuma odakla
+                    let mapPos = YBMapPos(x: 29.096925, y: 40.989532)
+                    mapView.setFocus(mapPos, durationSeconds: 0)
+                    mapView.setZoom(15, durationSeconds: 0)
+                }
+            }
+        }
+    }
+    
+    // MARK: - Navigation Methods
+    
+    /// Turn-by-turn navigasyonu başlatır
+    private func startNavigation() {
+        guard let mapView = mapView,
+              let source = locationSource else {
+            print("Navigasyon başlatılamadı: MapView veya LocationSource yok")
+            return
+        }
+        
+        // Mevcut rota katmanını kaldır
+        if let existingLayer = routeLayer,
+           let layers = mapView.getLayers() {
+            layers.remove(existingLayer)
+            routeLayer = nil
+        }
+        
+        // Navigasyonu başlat
+        navigationService.startNavigation(
+            mapView: mapView,
+            from: startLocation,
+            to: endLocation,
+            routeType: .car,
+            locationSource: source
+        )
+    }
+    
+    /// Navigasyonu durdurur
+    private func stopNavigation() {
+        navigationService.stopNavigation()
+    }
+    
+    // MARK: - Mock GPS Methods
+    
+    /// Mock GPS konumu gönderir (test amaçlı)
+    /// Haritaya tıklanan noktaya mock location gönderir
+    /// - Parameter location: Gönderilecek konum
+    func sendMockLocation(_ location: LocationData) {
+        guard let source = locationSource else {
+            print("Mock location gönderilemedi: LocationSource yok")
+            return
+        }
+        
+        navigationService.sendMockLocation(
+            locationSource: source,
+            latitude: location.latitude,
+            longitude: location.longitude
+        )
+        
+        print("Mock location gönderildi: \(location.latitude), \(location.longitude)")
+    }
+    
+    /// Haritaya tıklanan noktaya mock GPS gönderir
+    /// - Parameter mapPos: Harita koordinatları
+    func sendMockLocationAt(mapPos: YBMapPos) {
+        guard let source = locationSource,
+              let projection = mapView?.getOptions()?.getBaseProjection() else {
+            print("Mock location gönderilemedi: LocationSource veya projection yok")
+            return
+        }
+        
+        // WGS84'e çevir (opsiyonel - log için)
+        if let wgs84 = projection.toWgs84(mapPos) {
+            print("Mock location gönderiliyor: Lat=\(wgs84.getY()), Lon=\(wgs84.getX())")
+        }
+        
+        navigationService.sendMockLocation(locationSource: source, mapPos: mapPos)
     }
     
     /// Rota hesaplar ve haritaya çizer
@@ -653,6 +859,83 @@ struct RouteInfoCard: View {
         case .pedestrian:
             return "figure.walk"
         }
+    }
+}
+
+/// Navigasyon bilgi kartı
+/// Turn-by-turn navigasyon sırasında kalan süre, mesafe ve komut gösterir
+struct NavigationInfoCard: View {
+    let navigationInfo: NavigationInfo
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            // Mevcut komut (varsa)
+            if let command = navigationInfo.currentCommand {
+                HStack(spacing: 8) {
+                    Image(systemName: "arrow.turn.up.right")
+                        .foregroundColor(.white)
+                        .font(.system(size: 18, weight: .bold))
+                    
+                    Text(command)
+                        .foregroundColor(.white)
+                        .font(.system(size: 16, weight: .semibold))
+                    
+                    Spacer()
+                    
+                    // Sonraki komuta mesafe
+                    if navigationInfo.distanceToNextCommand > 0 {
+                        Text("\(Int(navigationInfo.distanceToNextCommand)) m")
+                            .foregroundColor(.white.opacity(0.9))
+                            .font(.system(size: 14, weight: .medium))
+                    }
+                }
+            }
+            
+            Divider()
+                .background(Color.white.opacity(0.3))
+            
+            // Kalan süre ve mesafe
+            HStack(spacing: 16) {
+                // Kalan süre
+                HStack(spacing: 6) {
+                    Image(systemName: "clock.fill")
+                        .foregroundColor(.white.opacity(0.8))
+                        .font(.system(size: 14))
+                    Text(navigationInfo.remainingTime)
+                        .foregroundColor(.white)
+                        .font(.system(size: 15, weight: .semibold))
+                }
+                
+                // Kalan mesafe
+                HStack(spacing: 6) {
+                    Image(systemName: "ruler.fill")
+                        .foregroundColor(.white.opacity(0.8))
+                        .font(.system(size: 14))
+                    Text(navigationInfo.remainingDistance)
+                        .foregroundColor(.white)
+                        .font(.system(size: 15, weight: .semibold))
+                }
+                
+                Spacer()
+                
+                // ETA (Tahmini Varış Saati)
+                if !navigationInfo.eta.isEmpty {
+                    HStack(spacing: 6) {
+                        Image(systemName: "clock.badge.checkmark.fill")
+                            .foregroundColor(.white.opacity(0.8))
+                            .font(.system(size: 14))
+                        Text("Varış: \(navigationInfo.eta)")
+                            .foregroundColor(.white)
+                            .font(.system(size: 15, weight: .semibold))
+                    }
+                }
+            }
+        }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 12)
+        .background(Color(red: 0.12, green: 0.23, blue: 0.34)) // Koyu mavi arka plan
+        .cornerRadius(12)
+        .shadow(color: Color.black.opacity(0.2), radius: 6, x: 0, y: 3)
     }
 }
 
