@@ -447,6 +447,23 @@ extension NavigationService {
         ) {
             navigationInfo = info
         }
+        
+        // Rotada ilerledikten sonra kalan yol (incompleted points)
+        let incompletedGeoJSON = navigationBundle?.getIncompletedPointsGeoJSON()
+        let incompletedLineString = navigationBundle?.getIncompletedPointsLineString()
+        let incompletedEncodedPolyline = navigationBundle?.getIncompletedPointsEncodedPolyline()
+        
+        // Rotada tamamlanan yol (completed points)
+        let completedGeoJSON = navigationBundle?.getCompletedPointsGeoJSON()
+        let completedLineString = navigationBundle?.getCompletedPointsLineString()
+        let completedEncodedPolyline = navigationBundle?.getCompletedPointsEncodedPolyline()
+        
+        // print("[NavigationService] Incompleted GeoJSON: \(incompletedGeoJSON ?? "nil")")
+        // print("[NavigationService] Incompleted LineString: \(incompletedLineString ?? "nil")")
+        // print("[NavigationService] Incompleted EncodedPolyline: \(incompletedEncodedPolyline ?? "nil")")
+        // print("[NavigationService] Completed GeoJSON: \(completedGeoJSON ?? "nil")")
+        // print("[NavigationService] Completed LineString: \(completedLineString ?? "nil")")
+        // print("[NavigationService] Completed EncodedPolyline: \(completedEncodedPolyline ?? "nil")")
     }
     
     /// Navigasyon başladığında çağrılır
@@ -471,7 +488,15 @@ extension NavigationService {
             command: "Rota güncellendi"
         )
         navigationInfo = info
+        
+        let geoJSON = navigationResult.getPointsGeoJSON()
+        let encodedPolyline = navigationResult.getPointsEncodedPolyline()
+        let lineString = navigationResult.getPointsLineString()
+        
         print("[NavigationService] Rota yeniden hesaplandı")
+        // print("[NavigationService] Recalculated GeoJSON: \(geoJSON ?? "nil")")
+        // print("[NavigationService] Recalculated EncodedPolyline: \(encodedPolyline ?? "nil")")
+        // print("[NavigationService] Recalculated LineString: \(lineString ?? "nil")")
     }
     
     /// Komutu Türkçe'ye çevirir (yolbilTest'teki yaklaşımı kullanarak)
