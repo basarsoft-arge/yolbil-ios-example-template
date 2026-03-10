@@ -81,7 +81,9 @@ class NavigationService: ObservableObject {
         from start: LocationData,
         to end: LocationData,
         routeType: RouteRequest.RouteType,
-        locationSource: GPSLocationSource
+        locationSource: GPSLocationSource,
+        waypoints: [LocationData] = [],
+        waypointThresholdMeters: Double = 100.0
     ) {
         self.mapView = mapView
         
@@ -107,7 +109,7 @@ class NavigationService: ObservableObject {
         
         // Navigation bundle oluştur
         let builder = YBYolbilNavigationBundleBuilder(
-            baseUrl: "https://services.basarsoft.com.tr",
+            baseUrl: "https://servicesdev.basarsoft.com.tr",
             apiKey: Secrets.apiKey,
             locationSource: locationSource
         )
@@ -123,6 +125,23 @@ class NavigationService: ObservableObject {
         }
         
         builder?.setAlternativeRoute(false)
+        
+        // Ara durakları (waypoints) ayarla
+        if !waypoints.isEmpty {
+            let waypointVector = YBMapPosVector()
+            for wp in waypoints {
+                // Koordinatları harita projeksiyonuna dönüştür
+                if let pos = wp.mapPosition(with: projection) {
+                    waypointVector?.add(pos)
+                    print("[NavigationService] Ara durak eklendi (projeksiyonlu): \(wp.latitude), \(wp.longitude)")
+                } else {
+                    print("[NavigationService] HATA: Ara durak projeksiyonu başarısız: \(wp.latitude), \(wp.longitude)")
+                }
+            }
+            builder?.setWayPoints(waypointVector)
+            builder?.setWayPointsPassedThresholdMeters(waypointThresholdMeters)
+            print("[NavigationService] \(waypoints.count) ara durak set edildi (eşik: \(waypointThresholdMeters)m)")
+        }
         
         // Kendi BlueDot katmanımızı kullanıyoruz, bundle'ın BlueDot'unu devre dışı bırak
         // Bu sayede navigasyon başlatıldığında BlueDot kaybolmaz
@@ -438,6 +457,9 @@ extension NavigationService {
     
     /// Navigasyon komutunu işler
     fileprivate func handleNavCommand(_ command: YBNavigationCommand) {
+        // Ara durak bilgilerini logla
+        logWaypointInfo(from: command)
+        
         // command.totalDistanceToCommand ve command.remainingTimeInSec kullanarak bilgileri al
         if let info = NavigationInfo.fromRemaining(
             distanceMeters: command.getTotalDistanceToCommand(),
@@ -497,6 +519,30 @@ extension NavigationService {
         // print("[NavigationService] Recalculated GeoJSON: \(geoJSON ?? "nil")")
         // print("[NavigationService] Recalculated EncodedPolyline: \(encodedPolyline ?? "nil")")
         // print("[NavigationService] Recalculated LineString: \(lineString ?? "nil")")
+    }
+    
+    /// Kullanılan API'ler:
+    /// - getWaypointCount(): Toplam ara durak sayısı
+    /// - getNextWaypointIndex(): Sıradaki ara durak index'i (0-based, yoksa -1)
+    /// - getDistanceToNextWaypoint(): Sıradaki ara durağa kalan mesafe (metre)
+    /// - getRemainingTimeToNextWaypointInSec(): Sıradaki ara durağa kalan süre (saniye)
+    /// - getDistanceToWaypointIndex(i): İstenilen ara durağa kalan mesafe (metre)
+    /// - getRemainingTimeToWaypointIndexInSec(i): İstenilen ara durağa kalan süre (saniye)
+    private func logWaypointInfo(from command: YBNavigationCommand) {
+        let waypointCount = command.getWaypointCount()
+        
+        // Ara durak yoksa işlem yapma
+        guard waypointCount > 0 else { return }
+        
+        let nextWaypointIndex = command.getNextWaypointIndex()
+        let distanceToNextWaypoint = command.getDistanceToNextWaypoint()
+        let remainingTimeToNextWaypoint = command.getRemainingTimeToNextWaypointInSec()
+        
+        var rawLog = "WAYPOINT_RAW | count=\(waypointCount) | nextIndex=\(nextWaypointIndex) | nextDistance=\(distanceToNextWaypoint) | nextTimeSec=\(remainingTimeToNextWaypoint)"
+        for i in 0..<waypointCount {
+            rawLog += " || wp[\(i)]:distance=\(command.getDistanceToWaypointIndex(i)),timeSec=\(command.getRemainingTimeToWaypointIndex(inSec: i))"
+        }
+        print("[NavigationService] \(rawLog)")
     }
     
     /// Komutu Türkçe'ye çevirir (yolbilTest'teki yaklaşımı kullanarak)

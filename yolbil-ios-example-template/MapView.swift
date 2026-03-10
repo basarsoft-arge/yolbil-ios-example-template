@@ -427,6 +427,13 @@ struct MapViewScreen: View {
     private let startLocation = LocationData(latitude: 40.989532, longitude: 29.096925)
     private let endLocation = LocationData(latitude: 40.906199, longitude: 29.156320)
     
+    // Örnek ara durak noktaları (waypoints)
+    // Başlangıç ve bitiş arasında ara noktalar (İstanbul rotası üzerinde)
+    private let waypoints: [LocationData] = [
+        LocationData(latitude: 40.963220, longitude: 29.110550),
+        LocationData(latitude: 40.935180, longitude: 29.130400)
+    ]
+    
     var body: some View {
         ZStack {
             // Harita görünümü (arka plan)
@@ -624,7 +631,9 @@ struct MapViewScreen: View {
             from: startLocation,
             to: endLocation,
             routeType: .car,
-            locationSource: source
+            locationSource: source,
+            waypoints: waypoints,
+            waypointThresholdMeters: 100.0
         )
     }
     
@@ -929,7 +938,7 @@ struct NavigationInfoCard: View {
                             .font(.system(size: 15, weight: .semibold))
                     }
                 }
-            }
+            }       
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 12)
